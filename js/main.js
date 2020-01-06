@@ -20,7 +20,7 @@
              **** ============= ****
     4) Crupier reparte carta a sí mismo (no se muestra)
     5) Jugadores elijen plantarse o no (ver aclaración para AI). Case 0, continúa: while hasta case 1 || sumaJugador == 21
-*/
+*/ 
  
  
 let As = 1 || 11;
@@ -179,7 +179,7 @@ switch(true) {
          text ="Empate";
          console.log("Empate");
          break;
-    case (21 > resultCrupier < resultJugador2):
+    case (21 > resultCrupier && resultCrupier < resultJugador2):
         text ="Pierde Crupier";
         console.log("Pierde Crupier");
         break;
@@ -211,10 +211,3 @@ switch(true) {
     //         console.log("Tus cartas son: "+cartasJugador1+", "+cartasJugador2+", "+cartasJugador3);
     //     }
     // });
- 
- 
- 
- 
-        // // Verifico black Jack
-        // var checkBlackJack = blackjack(jugada, jugada2);
-        // console.log(checkBlackJack);
