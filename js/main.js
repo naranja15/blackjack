@@ -43,6 +43,8 @@ var draw;
 
 var cartasArrayJugador = [];
 var cartasArrayCrupier = [];
+var jugadorCarta = [];
+var crupierCarta = [];
 
 function drawOrStand() {
     switch(true) { // Pregunto si continuar o plantarse
@@ -55,6 +57,9 @@ function drawOrStand() {
         break;
     };
 };
+function getCard() {
+    return Math.floor(Math.random() * 10) + 1;
+};
  
 function winGame() {
  
@@ -63,25 +68,29 @@ function winGame() {
 $("#tirarCartas").on('click', function(e) {
     e.preventDefault();
     // Mano 1
-    jugadorCarta1 += Math.floor(Math.random() * 10) + 1;
-    cartasArrayJugador.push(jugadorCarta1); // Pusheo al array
+    jugadorCarta.push(Math.floor(Math.random() * 10) + 1);
+    // jugadorCarta[0] += Math.floor(Math.random() * 10) + 1;
+    cartasArrayJugador.push(jugadorCarta[0]); // Pusheo al array
     console.log("J:" + cartasArrayJugador);        // Muestro
     jugada1 = jugadorCarta1;
     
     // Mano 2
-    crupierCarta1 += Math.floor(Math.random() * 10) + 1;
-    cartasArrayCrupier.push(crupierCarta1); // Pusheo al array
+    crupierCarta.push(Math.floor(Math.random() * 10) + 1);
+    // crupierCarta[0] += Math.floor(Math.random() * 10) + 1;
+    cartasArrayCrupier.push(crupierCarta[0]); // Pusheo al array
     console.log("C:" + cartasArrayCrupier);        // Muestro
     jugada3 = crupierCarta1;
 
     // Mano 3
-    jugadorCarta2 += Math.floor(Math.random() * 10) + 1;
-    cartasArrayJugador.push(jugadorCarta2); // Pusheo al array
+    jugadorCarta.push(Math.floor(Math.random() * 10) + 1);
+    // jugadorCarta[1] += Math.floor(Math.random() * 10) + 1;
+    cartasArrayJugador.push(jugadorCarta[1]); // Pusheo al array
     console.log("J:" + cartasArrayJugador);        // Muestro
     resultJugador = parseInt(cartasArrayJugador[0] + cartasArrayJugador[1]); // Sumo cartas
 
     // Mano 4 # Carta oculta. Se suma al resultado pero no se valida
-    crupierCarta2 += Math.floor(Math.random() * 10) + 1;
+    crupierCarta.push(Math.floor(Math.random() * 10) + 1);
+    // crupierCarta[1] += Math.floor(Math.random() * 10) + 1;
     // Ver línea 110
 
 
@@ -92,30 +101,38 @@ $("#tirarCartas").on('click', function(e) {
     // Continúo ejecución
     // Mano 5
     
+   function test() { 
+       
         do {
-            drawOrStand(); // Invoco función para draw or stand
             
+            drawOrStand(); // Invoco función para draw or stand
+            let i = 2;
             if(drawOrStand() == true) {
-            jugadorCarta3 += Math.floor(Math.random() * 10) + 1;
-            cartasArrayJugador.push(jugadorCarta3); // Pusheo al array
+            jugadorCarta.push(getCard());
+            // jugadorCarta[i] += Math.floor(Math.random() * 10) + 1;
+            cartasArrayJugador.push(jugadorCarta[i]); // Pusheo al array
             console.log("J:" + cartasArrayJugador);        // Muestro
             resultJugador = parseInt(cartasArrayJugador[0] + cartasArrayJugador[1] + cartasArrayJugador[2]); // Sumo cartas
+            i++;
             validarPartida();
         } else {
             console.log("Jugador se planta")
             // Se pushea 2da carta de Crupier al array y se verifica -------------------------------
-            cartasArrayCrupier.push(crupierCarta2); // Pusheo al array
+            cartasArrayCrupier.push(crupierCarta[1]);      // Pusheo al array
             console.log("C:" + cartasArrayCrupier);        // Muestro
             resultCrupier = parseInt(cartasArrayCrupier[0] + cartasArrayCrupier[1]); // Sumo cartas
             // -------------------------------------------------------------------------------------
             validarPartida();
-            console.log("Cartas jugador: " + jugadorCarta1 + "," + jugadorCarta2)
-            console.log("Cartas crupier: " + crupierCarta1 + "," + crupierCarta2)
+            console.log("Cartas jugador: " + jugadorCarta[0] + "," + jugadorCarta[1])
+            console.log("Cartas crupier: " + crupierCarta[0] + "," + crupierCarta[1])
         };
-        } while (drawOrStand() == false);
+        
+        } while (drawOrStand() == false || jugadorCarta.length < 6);
         
 
     }; 
+};
+test();
 
 });
 
