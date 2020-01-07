@@ -31,18 +31,29 @@ var resultJugador = 0;
 var cartasArrayJugador = [];
 var cartasArrayCrupier = [];
 
-var p=0;
-var c=0;
+var blackjack;
 
-function hitCard() {
-    switch(true) { // Pregunto si continuar o plantarse
-        case (confirm("Continuar?") == true):
-        return true;
-
-        case (confirm("Continuar?") == false):
-        return false;
-    };
+function blackJack(){
+if (cartasArrayJugador[0] == 10 && 
+    cartasArrayJugador[1] == 1 ||
+    cartasArrayJugador[0] == 1 &&
+    cartasArrayJugador[1] == 10){
+    return true;
+} else {
+    return false;
 };
+};
+
+// function hitCard() {
+//     switch(true) { // Pregunto si continuar o plantarse
+//         case (confirm("Continuar?") == true):
+//         return true;
+
+//         case (confirm("Continuar?") == false):
+//         return false;
+//     };
+// };
+
 function getCard() {
     return Math.floor(Math.random() * 10) + 1;
 };
@@ -87,10 +98,10 @@ function asCrupier(){
 };
  
 function normaCrupier(){
-    if (resultCrupier< 16) {
+    if (resultCrupier<= 16) {
         cartasArrayCrupier.push(getCard());
     }
-    if (resultCrupier>17) {
+    if (resultCrupier>=17) {
         return console.log("Crupier se planta")
     }
 };
@@ -102,7 +113,7 @@ $("#tirarCartas").on('click', function(e) {
         cartasArrayJugador.push(getCard());
         console.log("J 1era:" + cartasArrayJugador[0]);        // Muestro
         jugada1 = cartasArrayJugador[0];
-        p++;
+        $("#tirarCartas").attr('disabled', true);
 };
     manoUno();
 
@@ -111,18 +122,22 @@ $("#tirarCartas").on('click', function(e) {
         cartasArrayCrupier.push(getCard());                    // Pusheo al array
         console.log("C 1era:" + cartasArrayCrupier[0]);        // Muestro
         jugada3 = cartasArrayCrupier[0];
-        c++;
 };
     manoDos();
     // Mano 3
     function manoTres(){
         cartasArrayJugador.push(getCard());                   // Pusheo el random al array
         console.log("J 2da:" + cartasArrayJugador[1]);        // Muestro
-        asJugador();                                          // Invoco función de As (1 || 11)
-        for (let j=0; j < cartasArrayJugador.length;j++){     // Sumo todos los index del array
-            resultJugador += cartasArrayJugador[j];
-        }
-        p++;
+        // asJugador();                                          // Invoco función de As (1 || 11)
+        // for (let j=0; j < cartasArrayJugador.length;j++){     // Sumo todos los index del array
+        //     resultJugador += cartasArrayJugador[j];
+        // }
+        blackJack();
+        if (blackJack()==true) {
+            return console.log("Blackjack!");
+        } else {
+            return console.log("nada");
+        };
 };
     manoTres();
 
@@ -132,68 +147,54 @@ $("#tirarCartas").on('click', function(e) {
     };
     manoCuatro();
 
-    // Valido si hay Blackjack (As + 10)
-    if(resultJugador == 21){
-        return console.log("Blackjack!");
-    } else {
-        // Continúo ejecución
+});
     
 
     // Mano 5
 
+$("#pedir").on('click', function(e){
+    cartasArrayJugador.push(getCard());                 // Genero y pusheo random al array
+    console.log("J 3era:" + cartasArrayJugador);        // Muestro
+    // For para que sume todas las cartas del array ========================================
+    for (let j=0; j < cartasArrayJugador.length;j++){
+        resultJugador += cartasArrayJugador[j];
+    }
+    console.log("Suma total de cartas JUGADOR: "+resultJugador);
+    // =====================================================================================
+        if (resultJugador>21){
+            console.log("Jugador pierde")
+        }
+});
 
-    
-   function test() { 
-        // do {
-    hitCard(); // Invoco función para draw or stand
-        while (hitCard() == true || cartasArrayJugador.length < 6) {
+$("#plantar").on('click', function(e){
+    console.log("Jugador se planta")
+    $("#plantar").attr('disabled', true);
+    // Se pushea 2da carta de Crupier al array y se verifica -------------------------------
+    cartasArrayCrupier.push(primerCartaCrupier[0]);       // Pusheo al array
+    console.log("C:" + cartasArrayCrupier);               // Muestro
 
-            if(hitCard() == true) {
-            cartasArrayJugador.push(getCard());
+    // For para que sume todas las cartas del array ========================================
+    for (let c=0; c < cartasArrayCrupier.length;c++){
+        resultCrupier += cartasArrayCrupier[c];
+    }
+    normaCrupier();                                       // Ejecuto función para obligar a Crupier
+    console.log("Suma total de cartas CRUPIER: "+resultCrupier);
+    // =====================================================================================
 
-            console.log("J 3era:" + cartasArrayJugador);        // Muestro
+    // -------------------------------------------------------------------------------------
+    validarPartida2();
+    console.log("Cartas jugador: " + cartasArrayJugador[0] + "," + cartasArrayJugador[1])
+    console.log("Cartas crupier: " + cartasArrayCrupier[0] + "," + cartasArrayCrupier[1])
 
-            // For para que sume todas las cartas del array ========================================
-            for (let j=0; j < cartasArrayJugador.length;j++){
-                resultJugador += cartasArrayJugador[j];
-            }
-            console.log("Suma total de cartas JUGADOR: "+resultJugador);
-            // =====================================================================================
-            
-            validarPartida();
-        } else {
-            console.log("Jugador se planta")
-            // Se pushea 2da carta de Crupier al array y se verifica -------------------------------
-            cartasArrayCrupier.push(primerCartaCrupier[0]);       // Pusheo al array
-            console.log("C:" + cartasArrayCrupier);               // Muestro
+});
 
-            normaCrupier();                                       // Ejecuto función para obligar a Crupier
-
-            // For para que sume todas las cartas del array ========================================
-            for (let c=0; c < cartasArrayCrupier.length;c++){
-                resultCrupier += cartasArrayCrupier[c];
-            }
-            console.log("Suma total de cartas CRUPIER: "+resultCrupier);
-            // =====================================================================================
-
-            // -------------------------------------------------------------------------------------
-            validarPartida();
-            console.log("Cartas jugador: " + cartasArrayJugador[0] + "," + cartasArrayJugador[1])
-            console.log("Cartas crupier: " + cartasArrayCrupier[0] + "," + cartasArrayCrupier[1])
-        };
-        
-        };
-        // } while (hitCard() == true || cartasArrayJugador.length < 6); // Mido el array para que no supere la cantidad de cartas (6)
-
-    }; 
-};
 
 
 
 // Ejecuto función
-test();
 
-});
+
+
 
 
 
@@ -204,29 +205,39 @@ switch(true) {
     case (resultCrupier > 21):
         text = "Crupier se pasó de 21";
         console.log("Crupier se pasó de 21");
-        return hitCard() == false;
         break;
      case (resultCrupier == resultJugador):
          text ="Empate";
          console.log("Empate");
-         return hitCard() == false;
          break;
     case (21 > resultCrupier && resultCrupier < resultJugador):
         text ="Pierde Crupier";
         console.log("Pierde Crupier");
-        return hitCard() == false;
         break;
     // validación jugador
     case (resultJugador > 21):
         console.log("Jugador se pasó de 21");
-        return hitCard() == false;
         break;
     case (21 > resultJugador < resultCrupier):
         console.log("Pierde Jugador");
-        return hitCard() == false;
         break;
 };
 
+};
+
+function validarPartida2(){
+    if(resultCrupier>21){
+        console.log("Crupier se pasó de 21")
+    } else if(resultCrupier == resultJugador) {
+        console.log("Empate") 
+    } else if(21>resultCrupier && resultCrupier<resultJugador) {
+        console.log("Pierde Crupier")
+    } else if(resultJugador>21) {
+        console.log("Jugador se pasó de 21")
+    } else if(21>resultJugador<resultCrupier){
+        console.log("Pierde jugador")
+    };
+    
 };
 
 // Cuando jugador se planta, el crupier muestra su carta. Pide otra carta si resultCrupier <= 16 o se planta si >= 17
