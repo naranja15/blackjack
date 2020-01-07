@@ -19,28 +19,17 @@
     5) Jugadores elijen plantarse o no (ver aclaración para AI). Case 0, continúa: while hasta case 1 || sumaJugador == 21
 */ 
  
- 
-let As = 1 || 11;
- 
 var primerCartaCrupier = [];
 
 var text = "";
 
 var jugada1;
-var jugada2;
-var jugada5;
-var contadorTotal = 0;
 
 var resultCrupier = 0;
 var resultJugador = 0;
 
-
-var draw;
-
 var cartasArrayJugador = [];
 var cartasArrayCrupier = [];
-var jugadorMano = [];
-var crupierMano = [];
 
 var p=0;
 var c=0;
@@ -119,7 +108,7 @@ $("#tirarCartas").on('click', function(e) {
 
     // Mano 2
     function manoDos(){
-        cartasArrayCrupier.push(getCard());            // Pusheo al array
+        cartasArrayCrupier.push(getCard());                    // Pusheo al array
         console.log("C 1era:" + cartasArrayCrupier[0]);        // Muestro
         jugada3 = cartasArrayCrupier[0];
         c++;
@@ -156,9 +145,9 @@ $("#tirarCartas").on('click', function(e) {
     
    function test() { 
         // do {
+    hitCard(); // Invoco función para draw or stand
         while (hitCard() == true || cartasArrayJugador.length < 6) {
-            hitCard(); // Invoco función para draw or stand
-            
+
             if(hitCard() == true) {
             cartasArrayJugador.push(getCard());
 
@@ -192,7 +181,7 @@ $("#tirarCartas").on('click', function(e) {
             console.log("Cartas jugador: " + cartasArrayJugador[0] + "," + cartasArrayJugador[1])
             console.log("Cartas crupier: " + cartasArrayCrupier[0] + "," + cartasArrayCrupier[1])
         };
-        hitCard(); // Invoco función para draw or stand
+        
         };
         // } while (hitCard() == true || cartasArrayJugador.length < 6); // Mido el array para que no supere la cantidad de cartas (6)
 
