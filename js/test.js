@@ -93,3 +93,38 @@
     //         console.log("Tus cartas son: "+cartasJugador1+", "+cartasJugador2+", "+cartasJugador3);
     //     }
     // });
+
+
+    function blackjackP() {
+        // var resultJugador = jugada1 + jugada2;
+        if (resultJugador == 21) {
+            return true
+        } else {
+            return false
+            // Se incrementa sumando el valor en cartas obtenido + una nueva ejecución
+        }
+        
+    };
+    function blackjackC() {
+        // var resultCrupier = jugada3 + jugada4;
+        if (resultCrupier == 21) {
+            return true
+        } else {
+            return false
+            // Se incrementa sumando el valor en cartas obtenido + una nueva ejecución
+        }
+        
+    };
+
+    // != 21
+// != oponente
+// < oponente
+// > oponente
+
+//Losing conditions
+/*
+    x > 21
+    x == oponente
+    21 > x < oponente
+
+*/

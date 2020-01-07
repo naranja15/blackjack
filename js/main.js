@@ -22,155 +22,192 @@
  
 let As = 1 || 11;
  
-var jugadorCarta1 = 0;
-var crupierCarta1 = 0;
-var jugadorCarta2 = 0;
-var crupierCarta2 = 0;
-var jugadorCarta3 = 0;
-var crupierCarta3 = 0;
-var jugadorCarta4 = 0;
-var crupierCarta4 = 0;
+var primerCartaCrupier = [];
+
+var text = "";
 
 var jugada1;
 var jugada2;
 var jugada5;
 var contadorTotal = 0;
 
-var resultCrupier;
-var resultJugador;
+var resultCrupier = 0;
+var resultJugador = 0;
+
 
 var draw;
 
 var cartasArrayJugador = [];
 var cartasArrayCrupier = [];
-var jugadorCarta = [];
-var crupierCarta = [];
+var jugadorMano = [];
+var crupierMano = [];
 
-function drawOrStand() {
+var p=0;
+var c=0;
+
+function hitCard() {
     switch(true) { // Pregunto si continuar o plantarse
         case (confirm("Continuar?") == true):
         return true;
-        break;
 
         case (confirm("Continuar?") == false):
         return false;
-        break;
     };
 };
 function getCard() {
     return Math.floor(Math.random() * 10) + 1;
 };
+
+function asJugador() {
+    switch(true){
+        case (cartasArrayJugador[0] == 1):
+            var asChoice = confirm("Utilizar As como 1?")
+            if (asChoice == true){
+                return cartasArrayJugador[0] = 1;
+            } else {
+                return cartasArrayJugador[0] = 11;
+            };
+        case (cartasArrayJugador[1] == 1):
+            var asChoice = confirm("Utilizar As como 1?")
+            if (asChoice == true){
+                return cartasArrayJugador[1] = 1;
+            } else {
+                return cartasArrayJugador[1] = 11;
+            }
+    };
+
+};
+function asCrupier(){
+    switch(true){
+        case (cartasArrayCrupier[0] == 1):
+            var asChoice = confirm("Utilizar As como 1?")
+            if (asChoice == true){
+                return cartasArrayCrupier[0] = 1;
+            } else {
+                return cartasArrayCrupier[0] = 11;
+            };
+        case (cartasArrayCrupier[1] == 1):
+            var asChoice = confirm("Utilizar As como 1?")
+            if (asChoice == true){
+                return cartasArrayCrupier[1] = 1;
+            } else {
+                return cartasArrayCrupier[1] = 11;
+            }
+    };
+
+};
  
-function winGame() {
- 
+function normaCrupier(){
+    if (resultCrupier< 16) {
+        cartasArrayCrupier.push(getCard());
+    }
+    if (resultCrupier>17) {
+        return console.log("Crupier se planta")
+    }
 };
 
 $("#tirarCartas").on('click', function(e) {
     e.preventDefault();
     // Mano 1
-    jugadorCarta.push(Math.floor(Math.random() * 10) + 1);
-    // jugadorCarta[0] += Math.floor(Math.random() * 10) + 1;
-    cartasArrayJugador.push(jugadorCarta[0]); // Pusheo al array
-    console.log("J:" + cartasArrayJugador);        // Muestro
-    jugada1 = jugadorCarta1;
-    
-    // Mano 2
-    crupierCarta.push(Math.floor(Math.random() * 10) + 1);
-    // crupierCarta[0] += Math.floor(Math.random() * 10) + 1;
-    cartasArrayCrupier.push(crupierCarta[0]); // Pusheo al array
-    console.log("C:" + cartasArrayCrupier);        // Muestro
-    jugada3 = crupierCarta1;
+    function manoUno(){
+        cartasArrayJugador.push(getCard());
+        console.log("J 1era:" + cartasArrayJugador[0]);        // Muestro
+        jugada1 = cartasArrayJugador[0];
+        p++;
+};
+    manoUno();
 
+    // Mano 2
+    function manoDos(){
+        cartasArrayCrupier.push(getCard());            // Pusheo al array
+        console.log("C 1era:" + cartasArrayCrupier[0]);        // Muestro
+        jugada3 = cartasArrayCrupier[0];
+        c++;
+};
+    manoDos();
     // Mano 3
-    jugadorCarta.push(Math.floor(Math.random() * 10) + 1);
-    // jugadorCarta[1] += Math.floor(Math.random() * 10) + 1;
-    cartasArrayJugador.push(jugadorCarta[1]); // Pusheo al array
-    console.log("J:" + cartasArrayJugador);        // Muestro
-    resultJugador = parseInt(cartasArrayJugador[0] + cartasArrayJugador[1]); // Sumo cartas
+    function manoTres(){
+        cartasArrayJugador.push(getCard());                   // Pusheo el random al array
+        console.log("J 2da:" + cartasArrayJugador[1]);        // Muestro
+        asJugador();                                          // Invoco función de As (1 || 11)
+        for (let j=0; j < cartasArrayJugador.length;j++){     // Sumo todos los index del array
+            resultJugador += cartasArrayJugador[j];
+        }
+        p++;
+};
+    manoTres();
 
     // Mano 4 # Carta oculta. Se suma al resultado pero no se valida
-    crupierCarta.push(Math.floor(Math.random() * 10) + 1);
-    // crupierCarta[1] += Math.floor(Math.random() * 10) + 1;
-    // Ver línea 110
-
+    function manoCuatro(){
+        primerCartaCrupier.push(getCard());                     // Genero el random pero no lo pusheo
+    };
+    manoCuatro();
 
     // Valido si hay Blackjack (As + 10)
     if(resultJugador == 21){
         return console.log("Blackjack!");
     } else {
-    // Continúo ejecución
+        // Continúo ejecución
+    
+
     // Mano 5
+
+
     
    function test() { 
-       
-        do {
+        // do {
+        while (hitCard() == true || cartasArrayJugador.length < 6) {
+            hitCard(); // Invoco función para draw or stand
             
-            drawOrStand(); // Invoco función para draw or stand
-            let i = 2;
-            if(drawOrStand() == true) {
-            jugadorCarta.push(getCard());
-            // jugadorCarta[i] += Math.floor(Math.random() * 10) + 1;
-            cartasArrayJugador.push(jugadorCarta[i]); // Pusheo al array
-            console.log("J:" + cartasArrayJugador);        // Muestro
-            resultJugador = parseInt(cartasArrayJugador[0] + cartasArrayJugador[1] + cartasArrayJugador[2]); // Sumo cartas
-            i++;
+            if(hitCard() == true) {
+            cartasArrayJugador.push(getCard());
+
+            console.log("J 3era:" + cartasArrayJugador);        // Muestro
+
+            // For para que sume todas las cartas del array ========================================
+            for (let j=0; j < cartasArrayJugador.length;j++){
+                resultJugador += cartasArrayJugador[j];
+            }
+            console.log("Suma total de cartas JUGADOR: "+resultJugador);
+            // =====================================================================================
+            
             validarPartida();
         } else {
             console.log("Jugador se planta")
             // Se pushea 2da carta de Crupier al array y se verifica -------------------------------
-            cartasArrayCrupier.push(crupierCarta[1]);      // Pusheo al array
-            console.log("C:" + cartasArrayCrupier);        // Muestro
-            resultCrupier = parseInt(cartasArrayCrupier[0] + cartasArrayCrupier[1]); // Sumo cartas
+            cartasArrayCrupier.push(primerCartaCrupier[0]);       // Pusheo al array
+            console.log("C:" + cartasArrayCrupier);               // Muestro
+
+            normaCrupier();                                       // Ejecuto función para obligar a Crupier
+
+            // For para que sume todas las cartas del array ========================================
+            for (let c=0; c < cartasArrayCrupier.length;c++){
+                resultCrupier += cartasArrayCrupier[c];
+            }
+            console.log("Suma total de cartas CRUPIER: "+resultCrupier);
+            // =====================================================================================
+
             // -------------------------------------------------------------------------------------
             validarPartida();
-            console.log("Cartas jugador: " + jugadorCarta[0] + "," + jugadorCarta[1])
-            console.log("Cartas crupier: " + crupierCarta[0] + "," + crupierCarta[1])
+            console.log("Cartas jugador: " + cartasArrayJugador[0] + "," + cartasArrayJugador[1])
+            console.log("Cartas crupier: " + cartasArrayCrupier[0] + "," + cartasArrayCrupier[1])
         };
-        
-        } while (drawOrStand() == false || jugadorCarta.length < 6);
-        
+        hitCard(); // Invoco función para draw or stand
+        };
+        // } while (hitCard() == true || cartasArrayJugador.length < 6); // Mido el array para que no supere la cantidad de cartas (6)
 
     }; 
 };
+
+
+
+// Ejecuto función
 test();
 
 });
 
- 
-function blackjackP() {
-    // var resultJugador = jugada1 + jugada2;
-    if (resultJugador == 21) {
-        return true
-    } else {
-        return false
-        // Se incrementa sumando el valor en cartas obtenido + una nueva ejecución
-    }
-    
-};
-function blackjackC() {
-    // var resultCrupier = jugada3 + jugada4;
-    if (resultCrupier == 21) {
-        return true
-    } else {
-        return false
-        // Se incrementa sumando el valor en cartas obtenido + una nueva ejecución
-    }
-    
-};
 
-// != 21
-// != oponente
-// < oponente
-// > oponente
 
-//Losing conditions
-/*
-    x > 21
-    x == oponente
-    21 > x < oponente
-
-*/
-var text = "";
 
 function validarPartida() {
 switch(true) {
@@ -178,23 +215,29 @@ switch(true) {
     case (resultCrupier > 21):
         text = "Crupier se pasó de 21";
         console.log("Crupier se pasó de 21");
+        return hitCard() == false;
         break;
      case (resultCrupier == resultJugador):
          text ="Empate";
          console.log("Empate");
+         return hitCard() == false;
          break;
     case (21 > resultCrupier && resultCrupier < resultJugador):
         text ="Pierde Crupier";
         console.log("Pierde Crupier");
+        return hitCard() == false;
         break;
     // validación jugador
     case (resultJugador > 21):
         console.log("Jugador se pasó de 21");
+        return hitCard() == false;
         break;
     case (21 > resultJugador < resultCrupier):
         console.log("Pierde Jugador");
+        return hitCard() == false;
         break;
 };
+
 };
 
 // Cuando jugador se planta, el crupier muestra su carta. Pide otra carta si resultCrupier <= 16 o se planta si >= 17
