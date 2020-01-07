@@ -77,3 +77,19 @@
     };
 
 });
+
+
+    // // Se presiona el botón 5
+    // $("#manoCinco").on('click', function(e) {
+
+    //     cartasJugador3 += Math.floor(Math.random() * 10) + 1;
+    //     console.log("Carta 3 Jugador: "+cartasJugador3);
+    //     $("#manoTres").attr('disabled', true);
+    //     jugada5 += resultJugador + cartasJugador3;
+    //     if (jugada5 == 21) {
+    //         return console.log("Blackjack!!")
+    //     } else {
+
+    //         console.log("Tus cartas son: "+cartasJugador1+", "+cartasJugador2+", "+cartasJugador3);
+    //     }
+    // });

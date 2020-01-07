@@ -1,14 +1,11 @@
 /* Blackjack */
  
-// minimo: 1 - maximo: 21 para continuar la ronda ## TOTAL = 20 cartas
 // Todas las cartas valen su valor | AS vale 1 ú 11 | Figuras valen 10
-// while para el ciclo de la ronda
 // al ser presionado tirarCartas, se reparten 2 cartas al jugador y 2 cartas al crupier.
 //      -- Si sale As + carta de valor (que vale 10), sale Blackjack, a no ser que el crupier también sume 21.
 
 // !!!!!!!!! Utilizar un math random para que en case 1 se plante y case 0, no.
 //          # Edit: utilizar if statement para que si es <16, siga. Else, se planta.
-// If allPlayers case 1 && =! 21 => results in array and check wich is the closest to 21
  
 /* 
     1) Crupier reparte una carta al jugador
@@ -61,7 +58,6 @@ function drawOrStand() {
  
 function winGame() {
  
- 
 };
 
 $("#tirarCartas").on('click', function(e) {
@@ -69,26 +65,25 @@ $("#tirarCartas").on('click', function(e) {
     // Mano 1
     jugadorCarta1 += Math.floor(Math.random() * 10) + 1;
     cartasArrayJugador.push(jugadorCarta1); // Pusheo al array
-    console.log(cartasArrayJugador);        // Muestro
+    console.log("J:" + cartasArrayJugador);        // Muestro
     jugada1 = jugadorCarta1;
     
     // Mano 2
     crupierCarta1 += Math.floor(Math.random() * 10) + 1;
     cartasArrayCrupier.push(crupierCarta1); // Pusheo al array
-    console.log(cartasArrayCrupier);        // Muestro
+    console.log("C:" + cartasArrayCrupier);        // Muestro
     jugada3 = crupierCarta1;
 
     // Mano 3
     jugadorCarta2 += Math.floor(Math.random() * 10) + 1;
     cartasArrayJugador.push(jugadorCarta2); // Pusheo al array
-    console.log(cartasArrayJugador);        // Muestro
+    console.log("J:" + cartasArrayJugador);        // Muestro
     resultJugador = parseInt(cartasArrayJugador[0] + cartasArrayJugador[1]); // Sumo cartas
 
     // Mano 4 # Carta oculta. Se suma al resultado pero no se valida
     crupierCarta2 += Math.floor(Math.random() * 10) + 1;
-    cartasArrayCrupier.push(crupierCarta2); // Pusheo al array
-    console.log(cartasArrayCrupier);        // Muestro
-    resultCrupier = parseInt(cartasArrayCrupier[0] + cartasArrayCrupier[1]); // Sumo cartas
+    // Ver línea 110
+
 
     // Valido si hay Blackjack (As + 10)
     if(resultJugador == 21){
@@ -96,15 +91,23 @@ $("#tirarCartas").on('click', function(e) {
     } else {
     // Continúo ejecución
     // Mano 5
+    
         do {
             drawOrStand(); // Invoco función para draw or stand
+            
             if(drawOrStand() == true) {
             jugadorCarta3 += Math.floor(Math.random() * 10) + 1;
             cartasArrayJugador.push(jugadorCarta3); // Pusheo al array
-            console.log(cartasArrayJugador);        // Muestro
+            console.log("J:" + cartasArrayJugador);        // Muestro
             resultJugador = parseInt(cartasArrayJugador[0] + cartasArrayJugador[1] + cartasArrayJugador[2]); // Sumo cartas
+            validarPartida();
         } else {
-            console.log("Se planta")
+            console.log("Jugador se planta")
+            // Se pushea 2da carta de Crupier al array y se verifica -------------------------------
+            cartasArrayCrupier.push(crupierCarta2); // Pusheo al array
+            console.log("C:" + cartasArrayCrupier);        // Muestro
+            resultCrupier = parseInt(cartasArrayCrupier[0] + cartasArrayCrupier[1]); // Sumo cartas
+            // -------------------------------------------------------------------------------------
             validarPartida();
             console.log("Cartas jugador: " + jugadorCarta1 + "," + jugadorCarta2)
             console.log("Cartas crupier: " + crupierCarta1 + "," + crupierCarta2)
@@ -178,20 +181,3 @@ switch(true) {
 };
 
 // Cuando jugador se planta, el crupier muestra su carta. Pide otra carta si resultCrupier <= 16 o se planta si >= 17
-
-
-
-    // // Se presiona el botón 5
-    // $("#manoCinco").on('click', function(e) {
-
-    //     cartasJugador3 += Math.floor(Math.random() * 10) + 1;
-    //     console.log("Carta 3 Jugador: "+cartasJugador3);
-    //     $("#manoTres").attr('disabled', true);
-    //     jugada5 += resultJugador + cartasJugador3;
-    //     if (jugada5 == 21) {
-    //         return console.log("Blackjack!!")
-    //     } else {
-
-    //         console.log("Tus cartas son: "+cartasJugador1+", "+cartasJugador2+", "+cartasJugador3);
-    //     }
-    // });
