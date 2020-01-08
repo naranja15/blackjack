@@ -1,5 +1,12 @@
+*::after {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
 body{
-    
+
     font-family: Calibri;
     padding: 10px 20px;
 }
@@ -9,6 +16,49 @@ h1 {
 	background-color: #ffbd33;
 	padding: 10px;
 	border-radius:0 20px;
+  text-align: center;
 }
 
+#wrapper {
+  display: flex;
+  flex-direction: column;
 
+}
+
+#tirarCartas {
+  margin: 0% 30% 1rem 30%;
+}
+
+.tablero {
+  display: flex;
+
+}
+
+.opciones {
+  display: flex;
+}
+
+.partes {
+  min-height: 35vh;
+  width: 50%;
+  text-align: center;
+  padding-top: 10px;
+
+}
+
+ h2 {
+   margin-top: 20%;
+ }
+
+#pedir, #pedir2, #pedir3, #pedir4, #plantar {
+  width: 40%;
+  margin: auto;
+  margin-top: 1rem;
+
+}
+#logo {
+  width: 9rem;
+  position: absolute;
+  left:1em;
+  top:5em;
+}

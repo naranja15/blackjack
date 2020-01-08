@@ -128,3 +128,91 @@
     21 > x < oponente
 
 */
+
+
+
+function test() { 
+    // do {
+hitCard(); // Invoco función para draw or stand
+    while (hitCard() == true || cartasArrayJugador.length < 6) {
+
+        if(hitCard() == true) {
+        cartasArrayJugador.push(getCard());
+
+        console.log("J 3era:" + cartasArrayJugador);        // Muestro
+
+        // For para que sume todas las cartas del array ========================================
+        for (let j=0; j < cartasArrayJugador.length;j++){
+            resultJugador += cartasArrayJugador[j];
+        }
+        console.log("Suma total de cartas JUGADOR: "+resultJugador);
+        // =====================================================================================
+        
+        validarPartida();
+    } else {
+        console.log("Jugador se planta")
+        // Se pushea 2da carta de Crupier al array y se verifica -------------------------------
+        cartasArrayCrupier.push(primerCartaCrupier[0]);       // Pusheo al array
+        console.log("C:" + cartasArrayCrupier);               // Muestro
+
+        normaCrupier();                                       // Ejecuto función para obligar a Crupier
+
+        // For para que sume todas las cartas del array ========================================
+        for (let c=0; c < cartasArrayCrupier.length;c++){
+            resultCrupier += cartasArrayCrupier[c];
+        }
+        console.log("Suma total de cartas CRUPIER: "+resultCrupier);
+        // =====================================================================================
+
+        // -------------------------------------------------------------------------------------
+        validarPartida();
+        console.log("Cartas jugador: " + cartasArrayJugador[0] + "," + cartasArrayJugador[1])
+        console.log("Cartas crupier: " + cartasArrayCrupier[0] + "," + cartasArrayCrupier[1])
+    };
+    
+    };
+    // } while (hitCard() == true || cartasArrayJugador.length < 6); // Mido el array para que no supere la cantidad de cartas (6)
+
+}; 
+
+test();
+
+
+function asJugador() {
+    switch(true){
+        case (cartasArrayJugador[0] == 1):
+            var asChoice = confirm("Utilizar As como 1?")
+            if (asChoice == true){
+                return cartasArrayJugador[0] = 1;
+            } else {
+                return cartasArrayJugador[0] = 11;
+            };
+        case (cartasArrayJugador[1] == 1):
+            var asChoice = confirm("Utilizar As como 1?")
+            if (asChoice == true){
+                return cartasArrayJugador[1] = 1;
+            } else {
+                return cartasArrayJugador[1] = 11;
+            }
+    };
+
+};
+function asCrupier(){
+    switch(true){
+        case (cartasArrayCrupier[0] == 1):
+            var asChoice = confirm("Utilizar As como 1?")
+            if (asChoice == true){
+                return cartasArrayCrupier[0] = 1;
+            } else {
+                return cartasArrayCrupier[0] = 11;
+            };
+        case (cartasArrayCrupier[1] == 1):
+            var asChoice = confirm("Utilizar As como 1?")
+            if (asChoice == true){
+                return cartasArrayCrupier[1] = 1;
+            } else {
+                return cartasArrayCrupier[1] = 11;
+            }
+    };
+
+};
